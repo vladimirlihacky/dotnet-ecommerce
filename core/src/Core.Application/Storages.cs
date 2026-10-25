@@ -1,5 +1,6 @@
 namespace Core.Application;
 
+using core.Domain;
 using Core.Domain;
 
 public interface IOrderStorage
@@ -33,4 +34,20 @@ public interface IProductStorage
     Task<IEnumerable<Product>> GetAllAsync();
     Task SaveAsync(Product product);
     Task DeleteAsync(Guid id);
+}
+
+public interface IAccountStorage
+{
+    Task<Account> GetSystemAccountAsync();
+    Task<T?> GetByIdAsync<T>(Guid id) where T : Account; 
+    Task<UserAccount?> GetByUserIdAsync(Guid userId); 
+    Task<HoldAccount?> GetHoldByAccountIdAsync(Guid accountId); 
+    Task<T> SaveAsync<T>(T account) where T : Account;
+}
+public interface IPaymentOperationStorage
+{
+    Task<PaymentOperation?> GetByIdAsync(Guid id);
+    Task<IEnumerable<PaymentOperation>> GetByUserIdAsync(Guid userId);
+    Task<IEnumerable<PaymentOperation>> GetByAccountIdAsync(Guid accountId);
+    Task SaveAsync(PaymentOperation operation);
 }

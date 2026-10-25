@@ -9,3 +9,10 @@ public class InvalidPropertyException<T> : Exception
 {
     public InvalidPropertyException(string prop, T val) : base($"Invalid property {prop}: {val}") { }
 }
+
+public class InvalidValueException : Exception
+{
+    public InvalidValueException() { }
+    public InvalidValueException(string message) : base(message) { }
+    public InvalidValueException(string message, Exception inner) : base(message, inner) { }
+}
