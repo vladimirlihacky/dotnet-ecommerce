@@ -1,51 +1,50 @@
-namespace Core.Domain
+namespace Core.Domain;
+
+public class ShoppingCart
 {
-    public class ShoppingCart
+    public Guid Id { get; private set; }
+    public Dictionary<Guid, int> Products { get; } = new Dictionary<Guid, int>();
+
+    public ShoppingCart(Guid id)
     {
-        public Guid Id { get; private set; }
-        public Dictionary<Guid, int> Products { get; } = new Dictionary<Guid, int>();
+        Id = id;
 
-        public ShoppingCart(Guid id)
+        Validate();
+    }
+
+    public void Validate()
+    {
+        if (Id == Guid.Empty)
         {
-            Id = id;
-
-            Validate();
+            throw new InvalidPropertyException<Guid>("Id", Id);
         }
 
-        public void Validate()
-        {
-            if (Id == Guid.Empty)
-            {
-                throw new InvalidPropertyException<Guid>("Id", Id);
-            }
+        ValidateProducts();
+    }
 
-            ValidateProducts();
-        }
-
-        public void ValidateProducts()
+    public void ValidateProducts()
+    {
+        foreach(var p in Products)
         {
-            foreach(var p in Products)
+            if(p.Value <= 0)
             {
-                if(p.Value <= 0)
-                {
-                    throw new InvalidPropertyException<int>($"Product {p.Key}", p.Value);
-                }
+                throw new InvalidPropertyException<int>($"Product {p.Key}", p.Value);
             }
         }
+    }
 
-        public void SetProductAmount(Guid product, int amount)
+    public void SetProductAmount(Guid product, int amount)
+    {
+        if(amount <= 0)
         {
-            if(amount <= 0)
-            {
-                throw new InvalidPropertyException<int>($"Product {product}", amount);
-            }
-
-            Products[product] = amount;
+            throw new InvalidPropertyException<int>($"Product {product}", amount);
         }
 
-        public void RemoveProduct(Guid product)
-        {
-            Products.Remove(product);
-        }
+        Products[product] = amount;
+    }
+
+    public void RemoveProduct(Guid product)
+    {
+        Products.Remove(product);
     }
 }

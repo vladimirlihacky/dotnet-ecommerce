@@ -1,39 +1,38 @@
-namespace Core.Domain
+namespace Core.Domain;
+
+public enum UserRole
 {
-    public enum UserRole
+    User,
+    Admin,
+}
+public class User
+{
+    public Guid Id { get; private set; }
+    public string Name { get; private set; }
+    public UserRole Role { get; private set; }
+
+    public User(Guid id, string name)
     {
-        User,
-        Admin,
+        Id = id;
+        Name = name;
+        Role = Role;
     }
-    public class User
+
+    public void Validate()
     {
-        public Guid Id { get; private set; }
-        public string Name { get; private set; }
-        public UserRole Role { get; private set; }
-
-        public User(Guid id, string name)
+        if (Id == Guid.Empty)
         {
-            Id = id;
-            Name = name;
-            Role = Role;
+            throw new InvalidPropertyException<Guid>("Id", Id);
         }
 
-        public void Validate()
+        if (Name == "")
         {
-            if (Id == Guid.Empty)
-            {
-                throw new InvalidPropertyException<Guid>("Id", Id);
-            }
-
-            if (Name == "")
-            {
-                throw new InvalidPropertyException<string>("Name", Name);
-            }
+            throw new InvalidPropertyException<string>("Name", Name);
         }
+    }
 
-        public void SetRole(UserRole role)
-        {
-            Role = role;
-        }
+    public void SetRole(UserRole role)
+    {
+        Role = role;
     }
 }

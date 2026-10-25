@@ -1,7 +1,6 @@
-namespace Core.Domain
+namespace Core.Domain;
+
+public struct Media(string path)
 {
-    public struct Media(string path)
-    {
-        public readonly string Path = path; 
-    }
+    public readonly string Path = path; 
 }
