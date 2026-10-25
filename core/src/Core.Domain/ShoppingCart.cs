@@ -33,7 +33,6 @@ namespace Core.Domain
             }
         }
 
-        // TODO: сеттеры         
         public void SetProductAmount(Guid product, int amount)
         {
             if(amount <= 0)

@@ -18,7 +18,6 @@ namespace Core.Domain
             Role = Role;
         }
 
-        // TODO: валидация
         public void Validate()
         {
             if (Id == Guid.Empty)
