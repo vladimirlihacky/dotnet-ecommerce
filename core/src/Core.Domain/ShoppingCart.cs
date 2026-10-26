@@ -1,23 +1,29 @@
 namespace Core.Domain;
 
+public record ShoppingCartEntry(Guid productId, int amount)
+{
+    public Guid ProductId = productId;
+    public int Amount = amount; 
+}
 public class ShoppingCart
 {
     public Guid Id { get; private set; }
     public Guid UserId { get; private set; }
-    public Dictionary<Guid, int> Products { get; } = new Dictionary<Guid, int>();
+    public Dictionary<Guid, ShoppingCartEntry> Products { get; }
 
     public ShoppingCart(Guid id, Guid userId)
     {
         Id = id;
         UserId = userId;
-
+        Products = new Dictionary<Guid, ShoppingCartEntry>();
+        
         Validate();
     }
 
     public ShoppingCart(
         Guid id,
         Guid userId,
-        Dictionary<Guid, int> products
+        Dictionary<Guid, ShoppingCartEntry> products
         )
     {
         Id = id;
@@ -42,13 +48,20 @@ public class ShoppingCart
         ValidateProducts();
     }
 
+    // TODO: вынести валидацию отдельного продукта в ShoppingCartEntry
     public void ValidateProducts()
     {
         foreach (var p in Products)
         {
-            if (p.Value <= 0)
+            ShoppingCartEntry entry = p.Value;
+
+            if (entry.ProductId == Guid.Empty)
             {
-                throw new InvalidPropertyException<int>($"Product {p.Key}", p.Value);
+                throw new InvalidPropertyException<Guid>($"Entry.ProductId", entry.ProductId);
+            }
+            if (entry.Amount <= 0)
+            {
+                throw new InvalidPropertyException<int>($"Entry.Amount", entry.Amount);
             }
         }
     }
@@ -65,7 +78,7 @@ public class ShoppingCart
             return;
         }
 
-        Products[product] = amount;
+        Products[product] = new ShoppingCartEntry(product, amount);
     }
 
     public void RemoveProduct(Guid product)
