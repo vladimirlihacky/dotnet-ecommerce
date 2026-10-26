@@ -16,6 +16,8 @@ public class User
         Id = id;
         Name = name;
         Role = Role;
+
+        Validate();
     }
 
     public void Validate()

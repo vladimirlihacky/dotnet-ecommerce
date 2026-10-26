@@ -2,7 +2,7 @@ namespace Core.Domain;
 
 public class Product
 {
-    // TODO: динамические свойства в зависимости от категории 
+    // TODO: вернуть категории если будет время
     public Guid Id { get; private set; }
     public string Name { get; private set; }
     public decimal Cost { get; private set; }
@@ -65,11 +65,6 @@ public class Product
         {
             throw new InvalidPropertyException<decimal?>("Discount", Discount);
         }
-
-        if (Category == Guid.Empty)
-        {
-            throw new InvalidPropertyException<Guid>("Category", Category);
-        }
     }
 
     public void Update(
@@ -94,7 +89,7 @@ public class Product
         else
             SetDescription(description);
 
-        SetCategory(category);
+        // SetCategory(category);
         SetThumbnails(thumbnails);
     }
 
@@ -148,15 +143,15 @@ public class Product
         Description = null;
     }
 
-    public void SetCategory(Guid category)
-    {
-        if (category == Guid.Empty)
-        {
-            throw new InvalidPropertyException<Guid>("Category", category);
-        }
+    // public void SetCategory(Guid category)
+    // {
+    //     if (category == Guid.Empty)
+    //     {
+    //         throw new InvalidPropertyException<Guid>("Category", category);
+    //     }
 
-        Category = category;
-    }
+    //     Category = category;
+    // }
 
     public void SetThumbnails(Media[] thumbnails)
     {
