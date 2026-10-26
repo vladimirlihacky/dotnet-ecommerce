@@ -12,8 +12,8 @@
 
 - p95 150ms 
 - p99 250ms 
-- 2000 RPS
-- 0.01% Error rate
+- 200 RPS
+- 0% Error rate
 
 ## Доменный слой
 
