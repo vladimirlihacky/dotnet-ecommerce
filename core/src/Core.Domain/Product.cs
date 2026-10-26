@@ -13,12 +13,13 @@ public class Product
 
     public decimal DiscountedCost { get => GetDiscountedCost(); }
 
-    public Product(Guid id, string name, decimal cost)
+    public Product(Guid id, string name, decimal cost, Guid category)
     {
         Id = id;
         Name = name;
         Cost = cost;
         Thumbnails = [];
+        Category = category;
 
         Validate();
     }
@@ -65,6 +66,11 @@ public class Product
         {
             throw new InvalidPropertyException<decimal?>("Discount", Discount);
         }
+
+        if (Category == Guid.Empty)
+        {
+            throw new InvalidPropertyException<Guid>("Category", Category);
+        }
     }
 
     public void Update(
@@ -89,7 +95,7 @@ public class Product
         else
             SetDescription(description);
 
-        // SetCategory(category);
+        SetCategory(category);
         SetThumbnails(thumbnails);
     }
 
@@ -143,15 +149,15 @@ public class Product
         Description = null;
     }
 
-    // public void SetCategory(Guid category)
-    // {
-    //     if (category == Guid.Empty)
-    //     {
-    //         throw new InvalidPropertyException<Guid>("Category", category);
-    //     }
+    public void SetCategory(Guid category)
+    {
+        if (category == Guid.Empty)
+        {
+            throw new InvalidPropertyException<Guid>("Category", category);
+        }
 
-    //     Category = category;
-    // }
+        Category = category;
+    }
 
     public void SetThumbnails(Media[] thumbnails)
     {
