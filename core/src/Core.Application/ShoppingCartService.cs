@@ -20,8 +20,9 @@ public class ShoppingCartService
         _logger = logger;
     }
 
-    public async Task<ShoppingCart> Create(Guid id, Guid userId)
+    public async Task<ShoppingCart> Create(Guid userId)
     {
+        Guid id = Guid.CreateVersion7();
         ShoppingCart shoppingCart = new ShoppingCart(id, userId);
 
         await _shoppingCartStorage.SaveAsync(shoppingCart);

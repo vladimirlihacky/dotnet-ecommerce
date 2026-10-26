@@ -3,7 +3,6 @@ namespace Core.Application;
 using System.Transactions;
 using Core.Domain;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 public class OrderService
 {
@@ -44,8 +43,10 @@ public class OrderService
         return _orderStorage.GetByUserIdAsync(userId);
     }
 
-    public async Task<Order> CreateFromUserShoppingCartAsync(Guid id, Guid userId)
+    public async Task<Order> CreateFromUserShoppingCartAsync(Guid userId)
     {
+        Guid id = Guid.CreateVersion7();
+
         var transactionOptions = new TransactionOptions
         {
             IsolationLevel = IsolationLevel.ReadCommitted,
