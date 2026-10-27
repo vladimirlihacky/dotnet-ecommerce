@@ -59,7 +59,7 @@ public class Product
             throw new ArgumentException("Invalid product name");
         if(decimal.IsNegative(cost))
             throw new ArgumentException("Invalid product cost");
-        if(decimal.IsNegative(discount) || Discount > 1)
+        if(decimal.IsNegative(discount) || discount > 1)
             throw new ArgumentException("Invalid product discount");
         if(attributes.Distinct().Count() != attributes.Count())
             throw new ArgumentException("Duplicate product attributes");
