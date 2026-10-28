@@ -3,6 +3,6 @@
     <Project Path="Source/Core.Domain/Core.Domain.csproj" />
   </Folder>
   <Folder Name="/Tests/">
-    <Project Path="Tests/Core.Domain/Core.Domain.csproj" />
+    <Project Path="Tests/Core.Tests.Domain/Core.Tests.Domain.csproj" />
   </Folder>
 </Solution>

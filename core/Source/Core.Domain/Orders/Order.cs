@@ -8,7 +8,7 @@ public class Order
     public OrderStatus Status { get; private set; }
     public DeliveryInfo Delivery { get; private set; }
     public List<OrderEntry> Entries { get; private set; }
-    public decimal Cost => Entries.Sum(e => e.DiscountedCost);
+    public decimal Cost => Entries.Sum(e => e.DiscountedCost * e.Quantity);
 
     public Order(
         Guid id, 
@@ -47,7 +47,7 @@ public class Order
             throw new ArgumentException("Invalid order user id");
     }
 
-    public bool CheckOrderStatusTransition(OrderStatus from, OrderStatus to)
+    public static bool CheckOrderStatusTransition(OrderStatus from, OrderStatus to)
     {
         switch (from)
         {

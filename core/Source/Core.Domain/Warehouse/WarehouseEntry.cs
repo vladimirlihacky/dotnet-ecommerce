@@ -1,5 +1,11 @@
 namespace Core.Domain;
 
+/*
+Не использую просто поле Quantity в Product, т.к в дальнейшем 
+планирую сделать поддержку нескольких складов, т.е придется в WarehouseEntry
+добавить WarehouseId.
+*/
+
 public record WarehouseEntry
 {
     public readonly Guid ProductId;
