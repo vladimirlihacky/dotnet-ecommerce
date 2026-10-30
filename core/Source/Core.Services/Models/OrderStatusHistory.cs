@@ -1,7 +1,7 @@
 namespace Core.Services.Models;
 
 
-public record OrderStatusHistoryEntry
+public class OrderStatusHistoryEntry
 {
     public Guid Id { get; init; } 
     public Guid OrderId { get; init; }

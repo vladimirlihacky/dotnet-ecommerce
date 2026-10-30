@@ -13,11 +13,7 @@ public class UserAuthConfiguration : IEntityTypeConfiguration<UserAuth>
         builder.HasKey(ua => ua.Id);
 
         builder.Property(ua => ua.Credentials)
-            .IsRequired();
-
-        builder.HasOne(ua => ua.User)
-            .WithMany(u => u.AuthProviders)
-            .HasForeignKey(ua => ua.UserId) 
-            .OnDelete(DeleteBehavior.NoAction);
+            .IsRequired()
+            .HasMaxLength(500);
     }
 }

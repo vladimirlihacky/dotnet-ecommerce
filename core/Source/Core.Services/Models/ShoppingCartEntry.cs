@@ -1,7 +1,7 @@
 namespace Core.Services.Models;
 
 
-public record ShoppingCartEntry
+public class ShoppingCartEntry
 {
     public Guid Id { get; init; }
     public Guid ShoppingCartId { get; init; }

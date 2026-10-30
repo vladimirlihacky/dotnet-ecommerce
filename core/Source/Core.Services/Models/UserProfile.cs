@@ -1,6 +1,6 @@
 namespace Core.Services.Models;
 
-public record UserProfile
+public class UserProfile
 {
     public Guid Id { get; init; }
     public Guid UserId { get; init; }

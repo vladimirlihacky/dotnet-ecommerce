@@ -17,26 +17,21 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.Property(p => p.Name)
             .IsRequired()
-            .HasMaxLength(50);
+            .HasMaxLength(250);
         
         builder.Property(p => p.Cost)
             .HasPrecision(18, 2);
         
         builder.Property(p => p.Discount)
-            .HasPrecision(18, 2);
-
-        builder.HasOne(p => p.Category)
-            .WithMany(c => c.Products)
-            .HasForeignKey(p => p.CategoryId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .HasPrecision(18, 10);
 
         builder.HasMany(p => p.Attributes)
-            .WithOne()
+            .WithOne(pa => pa.Product)
             .HasForeignKey(pa => pa.ProductId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(p => p.Thumbnails)
-            .WithOne()
+            .WithOne(t => t.Product)
             .HasForeignKey(t => t.ProductId)
             .OnDelete(DeleteBehavior.Cascade);
 

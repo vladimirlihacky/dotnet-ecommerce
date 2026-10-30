@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Core.Presentation.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261030012809_InitialCreate")]
+    [Migration("20261030161556_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -38,11 +38,9 @@ namespace Core.Presentation.Migrations
                     b.Property<int>("Currency")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("OwnerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -51,7 +49,7 @@ namespace Core.Presentation.Migrations
                             t.HasCheckConstraint("CK_Accounts_Balance", "[Balance] >= 0");
                         });
 
-                    b.HasDiscriminator<int>("Type");
+                    b.HasDiscriminator<string>("Type");
 
                     b.UseTphMappingStrategy();
                 });
@@ -61,10 +59,6 @@ namespace Core.Presentation.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.PrimitiveCollection<string>("AttributeIds")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -76,11 +70,10 @@ namespace Core.Presentation.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
+                    b.HasIndex("ParentCategoryId", "Name")
                         .IsUnique()
-                        .HasDatabaseName("IX_Category_Name");
-
-                    b.HasIndex("ParentCategoryId");
+                        .HasDatabaseName("IX_Category_ParentCategoryId_Name_Unique")
+                        .HasFilter("[ParentCategoryId] IS NOT NULL");
 
                     b.ToTable("Categories", (string)null);
                 });
@@ -96,9 +89,6 @@ namespace Core.Presentation.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -172,15 +162,9 @@ namespace Core.Presentation.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("DeliveryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.PrimitiveCollection<string>("EntryIds")
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -212,7 +196,8 @@ namespace Core.Presentation.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
@@ -229,7 +214,10 @@ namespace Core.Presentation.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderEntries", (string)null);
+                    b.ToTable("OrderEntries", t =>
+                        {
+                            t.HasCheckConstraint("CK_Order_Quantity_Cost", "[Quantity] > 0 AND [Cost] >= 0");
+                        });
                 });
 
             modelBuilder.Entity("Core.Services.Models.OrderStatusHistoryEntry", b =>
@@ -240,7 +228,8 @@ namespace Core.Presentation.Migrations
 
                     b.Property<string>("Cause")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<int>("FromStatus")
                         .HasColumnType("int");
@@ -266,10 +255,6 @@ namespace Core.Presentation.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.PrimitiveCollection<string>("AttributeIds")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
@@ -278,17 +263,13 @@ namespace Core.Presentation.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Discount")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 10)
+                        .HasColumnType("decimal(18,10)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.PrimitiveCollection<string>("ThumbnailIds")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
 
@@ -314,13 +295,16 @@ namespace Core.Presentation.Migrations
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
-
                     b.HasIndex("SearchAttributeId");
+
+                    b.HasIndex("ProductId", "SearchAttributeId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_ProductAttribute_ProductId_SearchAttributeId_Unique");
 
                     b.ToTable("ProductAttributes", (string)null);
                 });
@@ -336,11 +320,13 @@ namespace Core.Presentation.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
 
@@ -355,7 +341,13 @@ namespace Core.Presentation.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("ShoppingCarts", (string)null);
                 });
@@ -377,9 +369,11 @@ namespace Core.Presentation.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
-
                     b.HasIndex("ShoppingCartId");
+
+                    b.HasIndex("ProductId", "ShoppingCartId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_ShoppingCartEntry_ShoppingCartId_ProductId_Unique");
 
                     b.ToTable("ShoppingCartEntries", t =>
                         {
@@ -393,34 +387,16 @@ namespace Core.Presentation.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AccountId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("ProfileId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ShoppingCartId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("AccountId")
-                        .IsUnique();
 
                     b.HasIndex("Name")
                         .IsUnique()
-                        .HasDatabaseName("IX_Users_Name");
-
-                    b.HasIndex("ProfileId")
-                        .IsUnique();
-
-                    b.HasIndex("ShoppingCartId")
-                        .IsUnique();
+                        .HasDatabaseName("IX_Users_Name_Unique");
 
                     b.ToTable("Users", (string)null);
                 });
@@ -433,7 +409,8 @@ namespace Core.Presentation.Migrations
 
                     b.Property<string>("Credentials")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
@@ -458,6 +435,9 @@ namespace Core.Presentation.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("UserProfile");
                 });
@@ -497,7 +477,7 @@ namespace Core.Presentation.Migrations
                             t.HasCheckConstraint("CK_Accounts_Balance", "[Balance] >= 0");
                         });
 
-                    b.HasDiscriminator().HasValue(1);
+                    b.HasDiscriminator().HasValue("Hold");
                 });
 
             modelBuilder.Entity("Core.Services.Models.SystemAccount", b =>
@@ -509,24 +489,26 @@ namespace Core.Presentation.Migrations
                             t.HasCheckConstraint("CK_Accounts_Balance", "[Balance] >= 0");
                         });
 
-                    b.HasDiscriminator().HasValue(0);
+                    b.HasDiscriminator().HasValue("System");
                 });
 
             modelBuilder.Entity("Core.Services.Models.UserAccount", b =>
                 {
                     b.HasBaseType("Core.Services.Models.Account");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Accounts", null, t =>
                         {
                             t.HasCheckConstraint("CK_Accounts_Balance", "[Balance] >= 0");
                         });
 
-                    b.HasDiscriminator().HasValue(2);
+                    b.HasDiscriminator().HasValue("User");
                 });
 
             modelBuilder.Entity("Core.Services.Models.Category", b =>
@@ -563,11 +545,13 @@ namespace Core.Presentation.Migrations
 
             modelBuilder.Entity("Core.Services.Models.Media", b =>
                 {
-                    b.HasOne("Core.Services.Models.Product", null)
+                    b.HasOne("Core.Services.Models.Product", "Product")
                         .WithMany("Thumbnails")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Core.Services.Models.Order", b =>
@@ -586,13 +570,13 @@ namespace Core.Presentation.Migrations
                     b.HasOne("Core.Services.Models.Order", "Order")
                         .WithMany("Entries")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Core.Services.Models.Product", "Product")
                         .WithMany("OrderEntries")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Order");
@@ -605,7 +589,7 @@ namespace Core.Presentation.Migrations
                     b.HasOne("Core.Services.Models.Order", "Order")
                         .WithMany("StatusHistory")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Order");
@@ -622,7 +606,7 @@ namespace Core.Presentation.Migrations
                     b.HasOne("Core.Services.Models.WarehouseEntry", "WarehouseEntry")
                         .WithOne("Product")
                         .HasForeignKey("Core.Services.Models.Product", "Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -632,7 +616,7 @@ namespace Core.Presentation.Migrations
 
             modelBuilder.Entity("Core.Services.Models.ProductAttribute", b =>
                 {
-                    b.HasOne("Core.Services.Models.Product", null)
+                    b.HasOne("Core.Services.Models.Product", "Product")
                         .WithMany("Attributes")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -644,6 +628,8 @@ namespace Core.Presentation.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.Navigation("Product");
+
                     b.Navigation("SearchAttribute");
                 });
 
@@ -652,10 +638,21 @@ namespace Core.Presentation.Migrations
                     b.HasOne("Core.Services.Models.Category", "Category")
                         .WithMany("Attributes")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Core.Services.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("Core.Services.Models.User", "User")
+                        .WithOne("ShoppingCart")
+                        .HasForeignKey("Core.Services.Models.ShoppingCart", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Core.Services.Models.ShoppingCartEntry", b =>
@@ -669,37 +666,10 @@ namespace Core.Presentation.Migrations
                     b.HasOne("Core.Services.Models.ShoppingCart", "ShoppingCart")
                         .WithMany("Entries")
                         .HasForeignKey("ShoppingCartId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
-
-                    b.Navigation("ShoppingCart");
-                });
-
-            modelBuilder.Entity("Core.Services.Models.User", b =>
-                {
-                    b.HasOne("Core.Services.Models.UserAccount", "Account")
-                        .WithOne()
-                        .HasForeignKey("Core.Services.Models.User", "AccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Core.Services.Models.UserProfile", "Profile")
-                        .WithOne("User")
-                        .HasForeignKey("Core.Services.Models.User", "ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Services.Models.ShoppingCart", "ShoppingCart")
-                        .WithOne("User")
-                        .HasForeignKey("Core.Services.Models.User", "ShoppingCartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Profile");
 
                     b.Navigation("ShoppingCart");
                 });
@@ -715,9 +685,20 @@ namespace Core.Presentation.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Core.Services.Models.UserProfile", b =>
+                {
+                    b.HasOne("Core.Services.Models.User", "User")
+                        .WithOne("Profile")
+                        .HasForeignKey("Core.Services.Models.UserProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Core.Services.Models.HoldAccount", b =>
                 {
-                    b.HasOne("Core.Services.Models.Account", "BaseAccount")
+                    b.HasOne("Core.Services.Models.UserAccount", "BaseAccount")
                         .WithOne()
                         .HasForeignKey("Core.Services.Models.HoldAccount", "BaseAccountId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -728,8 +709,10 @@ namespace Core.Presentation.Migrations
             modelBuilder.Entity("Core.Services.Models.UserAccount", b =>
                 {
                     b.HasOne("Core.Services.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithOne("Account")
+                        .HasForeignKey("Core.Services.Models.UserAccount", "UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -769,20 +752,19 @@ namespace Core.Presentation.Migrations
             modelBuilder.Entity("Core.Services.Models.ShoppingCart", b =>
                 {
                     b.Navigation("Entries");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Core.Services.Models.User", b =>
                 {
+                    b.Navigation("Account");
+
                     b.Navigation("AuthProviders");
 
                     b.Navigation("Orders");
-                });
 
-            modelBuilder.Entity("Core.Services.Models.UserProfile", b =>
-                {
-                    b.Navigation("User");
+                    b.Navigation("Profile");
+
+                    b.Navigation("ShoppingCart");
                 });
 
             modelBuilder.Entity("Core.Services.Models.WarehouseEntry", b =>

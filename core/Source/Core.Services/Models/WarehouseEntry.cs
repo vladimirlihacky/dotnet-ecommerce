@@ -1,6 +1,6 @@
 namespace Core.Services.Models;
 
-public record WarehouseEntry
+public class WarehouseEntry
 {
     public Guid ProductId { get; init; }
     public int Quantity { get; set; }

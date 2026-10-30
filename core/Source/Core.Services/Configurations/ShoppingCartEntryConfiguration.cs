@@ -15,13 +15,12 @@ public class ShoppingCartEntryConfiguration : IEntityTypeConfiguration<ShoppingC
 
         builder.HasKey(sce => sce.Id);
 
-        builder.HasOne(sce => sce.ShoppingCart)
-            .WithMany(sc => sc.Entries)
-            .HasForeignKey(sce => sce.ShoppingCartId)
-            .OnDelete(DeleteBehavior.NoAction);
-
         builder.HasOne(sce => sce.Product)
             .WithMany(p => p.ShoppingCartEntries)
             .HasForeignKey(sce => sce.ProductId);
+        
+        builder.HasIndex(sce => new{ sce.ProductId, sce.ShoppingCartId })
+            .IsUnique()
+            .HasDatabaseName("IX_ShoppingCartEntry_ShoppingCartId_ProductId_Unique");
     }
 }

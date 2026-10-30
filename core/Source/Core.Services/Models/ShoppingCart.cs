@@ -1,12 +1,11 @@
 namespace Core.Services.Models;
 
 
-public record ShoppingCart
+public class ShoppingCart
 {
-    public Guid Id;
-    public Guid UserId;
-    public List<Guid> EntryIds = [];
-    public User? User;
-    public List<ShoppingCartEntry>? Entries;
+    public Guid Id { get; init; }
+    public Guid UserId { get; init; }
+    public User? User { get; set; }
+    public List<ShoppingCartEntry>? Entries { get; set; }
 }
 

@@ -1,15 +1,13 @@
 namespace Core.Services.Models;
 
 
-public record Product
+public class Product
 {
     public Guid Id { get; init; } 
     public Guid CategoryId { get; set; }
     public string Name { get; set; } = string.Empty;
     public decimal Cost { get; set; }
     public decimal Discount { get; set; }
-    public List<Guid> ThumbnailIds { get; set; } = [];
-    public List<Guid> AttributeIds { get; set; } = [];
     public Category? Category { get; set; }
     public List<Media>? Thumbnails { get; set; }
     public List<ProductAttribute>? Attributes { get; set; }

@@ -15,6 +15,9 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
 
         builder.HasKey(a => a.Id);
 
+        builder.Property(a => a.Type)
+            .HasConversion<string>();
+
         builder.HasDiscriminator(a => a.Type)
             .HasValue<SystemAccount>(Domain.AccountType.System)
             .HasValue<UserAccount>(Domain.AccountType.User)

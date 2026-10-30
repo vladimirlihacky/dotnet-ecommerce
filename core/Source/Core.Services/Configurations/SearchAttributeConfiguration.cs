@@ -11,10 +11,13 @@ public class SearchAttributeConfiguration : IEntityTypeConfiguration<SearchAttri
         builder.ToTable("SearchAttributes");
 
         builder.HasKey(sa => sa.Id);
-
-        builder.HasOne(sa => sa.Category)
-            .WithMany(c => c.Attributes)
-            .HasForeignKey(sa => sa.CategoryId)
-            .OnDelete(DeleteBehavior.NoAction);
+        
+        builder.Property(sa => sa.Name)
+            .IsRequired()
+            .HasMaxLength(150);
+        
+        builder.Property(sa => sa.Type)
+            .IsRequired()
+            .HasMaxLength(150);
     }
 }

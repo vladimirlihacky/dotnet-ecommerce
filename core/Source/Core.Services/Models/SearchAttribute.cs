@@ -1,6 +1,6 @@
 namespace Core.Services.Models;
 
-public record SearchAttribute
+public class SearchAttribute
 {
     public Guid Id { get; init; }
     public Guid CategoryId { get; init; }

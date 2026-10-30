@@ -12,9 +12,8 @@ public class OrderStatusHistoryEntryConfiguration : IEntityTypeConfiguration<Ord
 
         builder.HasKey(she => she.Id);
 
-        builder.HasOne(she => she.Order)
-            .WithMany(o => o.StatusHistory)
-            .HasForeignKey(oe => oe.OrderId)
-            .OnDelete(DeleteBehavior.NoAction);
+        builder.Property(she => she.Cause)
+            .IsRequired()
+            .HasMaxLength(250);
     }
 }

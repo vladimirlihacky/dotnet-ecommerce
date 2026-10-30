@@ -10,15 +10,15 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
         builder.ToTable("Categories");
 
-        builder.HasKey(u => u.Id);
+        builder.HasKey(c => c.Id);
 
-        builder.Property(u => u.Name)
+        builder.Property(c => c.Name)
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.HasIndex(u => u.Name)
+        builder.HasIndex(c => new{ c.ParentCategoryId, c.Name })
             .IsUnique()
-            .HasDatabaseName("IX_Category_Name");
+            .HasDatabaseName("IX_Category_ParentCategoryId_Name_Unique");
 
         builder.HasOne(c => c.ParentCategory)
             .WithMany()
@@ -33,6 +33,6 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
         builder.HasMany(c => c.Products)
             .WithOne(p => p.Category)
             .HasForeignKey(p => p.CategoryId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

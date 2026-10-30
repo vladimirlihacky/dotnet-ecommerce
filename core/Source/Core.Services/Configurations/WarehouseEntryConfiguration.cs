@@ -18,10 +18,5 @@ public class WarehouseEntryConfiguration : IEntityTypeConfiguration<WarehouseEnt
         builder.Property(we => we.Quantity)
             .IsRequired()
             .HasDefaultValue(0);
-        
-        builder.HasOne(we => we.Product)
-            .WithOne(p => p.WarehouseEntry)
-            .HasForeignKey<Product>(p => p.Id)
-            .OnDelete(DeleteBehavior.Restrict);
     }
 }
