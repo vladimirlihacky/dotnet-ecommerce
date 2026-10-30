@@ -1,6 +1,7 @@
 namespace Core.Services;
 
 using Microsoft.EntityFrameworkCore;
+using Core.Services.Models;
 
 public class AppDbContext : DbContext
 {
@@ -10,6 +11,9 @@ public class AppDbContext : DbContext
     public DbSet<OrderEntry> OrderEntries => Set<OrderEntry>();
     public DbSet<OrderStatusHistoryEntry> OrderStatusHistoryEntries => Set<OrderStatusHistoryEntry>();
     public DbSet<Account> Accounts => Set<Account>();
+    public DbSet<SystemAccount> SystemAccounts => Set<SystemAccount>();
+    public DbSet<UserAccount> UserAccounts => Set<UserAccount>();
+    public DbSet<HoldAccount> HoldAccounts => Set<HoldAccount>();
     public DbSet<LedgerEntry> LedgerEntries => Set<LedgerEntry>();
     public DbSet<ProductAttribute> ProductAttributes => Set<ProductAttribute>();
     public DbSet<SearchAttribute> SearchAttributes => Set<SearchAttribute>();

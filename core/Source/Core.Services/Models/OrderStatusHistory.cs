@@ -3,11 +3,11 @@ namespace Core.Services.Models;
 
 public record OrderStatusHistoryEntry
 {
-    public required Guid Id; 
-    public required Guid OrderId; 
-    public required Domain.OrderStatus FromStatus; 
-    public required Domain.OrderStatus ToStatus;
-    public required string Cause; 
-    public required DateTimeOffset Timestamp;
-    public Order? Order; 
+    public Guid Id { get; init; } 
+    public Guid OrderId { get; init; }
+    public Domain.OrderStatus FromStatus { get; init; } 
+    public Domain.OrderStatus ToStatus { get; init; }
+    public string Cause { get; init; } = string.Empty;
+    public DateTimeOffset Timestamp { get; init; }
+    public Order? Order { get; init; }
 }

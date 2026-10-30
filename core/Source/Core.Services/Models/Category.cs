@@ -3,11 +3,12 @@ namespace Core.Services.Models;
 
 public record Category
 {
-    public required Guid Id; 
-    public required string Name;
-    public required Guid? ParentCategoryId;
-    public required List<Guid> AttributeIds;
+    public Guid Id { get; init; }
+    public string Name { get; set; } = string.Empty;
+    public Guid? ParentCategoryId { get; set; }
+    public List<Guid> AttributeIds { get; set; } = [];
 
-    public Category? ParentCategory;
-    public List<SearchAttribute>? Attributes;
+    public Category? ParentCategory { get; set; }
+    public List<SearchAttribute>? Attributes { get; set; }
+    public List<Product>? Products { get; set; }
 }

@@ -3,13 +3,15 @@ namespace Core.Services.Models;
 
 public record OrderEntry
 {
-    public required Guid Id;
-    public required Guid ProductId;
-    public required string Name;
-    public required decimal Cost;
-    public required decimal Discount;
-    public required decimal DiscountedCost;
-    public required int Quantity;
+    public Guid Id { get; init; }
+    public Guid ProductId { get; init; }
+    public Guid OrderId { get; init; }
+    public string Name { get; init; }
+    public decimal Cost { get; init; }
+    public decimal Discount { get; init; }
+    public decimal DiscountedCost { get; init; }
+    public int Quantity { get; init; }
 
-    public Product? Product;
+    public Product? Product { get; set; }
+    public Order? Order { get; set; }
 }

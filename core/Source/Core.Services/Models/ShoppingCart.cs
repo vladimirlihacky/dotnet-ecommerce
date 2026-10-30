@@ -3,8 +3,10 @@ namespace Core.Services.Models;
 
 public record ShoppingCart
 {
-    public required Guid Id;
-    public required List<Guid> EntryIds;
-    public required List<ShoppingCartEntry>? Entries;
+    public Guid Id;
+    public Guid UserId;
+    public List<Guid> EntryIds = [];
+    public User? User;
+    public List<ShoppingCartEntry>? Entries;
 }
 

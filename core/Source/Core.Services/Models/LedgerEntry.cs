@@ -3,12 +3,12 @@ namespace Core.Services.Models;
 
 public record LedgerEntry
 {
-    public required Guid Id;
-    public required Guid AccountId;
-    public required Domain.OperationType Operation; 
-    public required decimal Amount;
-    public required Domain.Currency Currency;
-    public required DateTimeOffset Timestamp;
+    public Guid Id { get; init; }
+    public Guid AccountId { get; init; }
+    public Domain.OperationType Operation { get; init; } 
+    public decimal Amount { get; init; }
+    public Domain.Currency Currency { get; init; }
+    public DateTimeOffset Timestamp { get; init; }
 
-    public Account? Account; 
+    public Account? Account { get; init; } 
 }

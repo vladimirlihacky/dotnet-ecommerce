@@ -3,9 +3,9 @@ namespace Core.Services.Models;
 
 public record UserAuth
 {
-    public required Guid Id; 
-    public required Guid UserId; 
-    public required Domain.UserAuthType Type;
-    public required string Credentials;
-    public User? User;
+    public Guid Id { get; init; }
+    public Guid UserId { get; init; }
+    public Domain.UserAuthType Type { get; init; }
+    public string Credentials { get; init; } = string.Empty;
+    public User? User { get; set; }
 }

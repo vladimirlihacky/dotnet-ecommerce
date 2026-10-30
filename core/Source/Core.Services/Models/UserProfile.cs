@@ -2,6 +2,7 @@ namespace Core.Services.Models;
 
 public record UserProfile
 {
-    public required Guid Id;
-    public required Guid UserId;
+    public Guid Id { get; init; }
+    public Guid UserId { get; init; }
+    public User? User { get; set; }
 }
