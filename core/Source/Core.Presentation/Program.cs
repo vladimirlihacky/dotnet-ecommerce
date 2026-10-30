@@ -1,5 +1,5 @@
-using Core.Services.Models;
-using Core.Services;
+using Core.Infrastructure.Models;
+using Core.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
