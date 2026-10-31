@@ -1,3 +1,6 @@
 .env
 bin
 obj
+TestResults
+appsettings.json
+appsettings.*.json

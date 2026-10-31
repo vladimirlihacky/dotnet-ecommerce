@@ -1,0 +1,20 @@
+namespace Core.Infrastructure.ModelConfigurations;
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Core.Infrastructure.Models;
+
+public class ShoppingCartConfiguration : IEntityTypeConfiguration<ShoppingCart>
+{
+    public void Configure(EntityTypeBuilder<ShoppingCart> builder)
+    {
+        builder.ToTable("ShoppingCarts");
+
+        builder.HasKey(sc => sc.Id);
+
+        builder.HasMany(sc => sc.Entries)
+            .WithOne(sce => sce.ShoppingCart)
+            .HasForeignKey(sce => sce.ShoppingCartId)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
+}

@@ -88,17 +88,17 @@
 
 ### Order
 
-- У заказа должен быть статус (Created -> Purchased -> Completed | Cancelled)
+- У заказа должен быть статус (Created -> Purchased -> Completed | Cancelled) *
 - Невозможно изменить статус заказа с Cancelled на любой другой
 - Невозможно перейти из любого статуса кроме Created в Created
-- У заказа должен быть ID
-- У заказа должен быть Timestamp
+- У заказа должен быть ID *
+- У заказа должен быть Timestamp -
 - Заказ должен хранить снапшоты товаров на время Timestamp (для аудита)
 - У заказа должна быть сумма
-- У заказа должен быть UserID
+- У заказа должен быть UserID *
 - Completed | Cancelled заказы неизменяемы
 - Заказ создается из корзины
-- У заказа должен быть ShippingAdress
+- У заказа должен быть ShippingAdress *
 
 ### OrderStatusHistory
 
