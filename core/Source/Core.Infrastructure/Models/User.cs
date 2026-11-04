@@ -1,9 +1,9 @@
-﻿namespace Core.Infrastructure.Models;
+﻿using Microsoft.AspNetCore.Identity;
 
-public class User
+namespace Core.Infrastructure.Models;
+
+public class User : IdentityUser<Guid>
 {
-    public Guid Id { get; init; }
-    public string Name { get; init; } = string.Empty;
     public UserAccount? Account { get; set; }
     public UserProfile? Profile { get; set; }
     public ShoppingCart? ShoppingCart { get; set; }
