@@ -5,7 +5,7 @@ using Core.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
-public class AppDbContext : IdentityDbContext<IdentityUser>
+public class AppDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
 {
     public DbSet<Media> Media => Set<Media>();
     public DbSet<DeliveryInfo> DeliveryInfo => Set<DeliveryInfo>();

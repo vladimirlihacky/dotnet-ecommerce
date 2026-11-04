@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using Serilog;
 using Core.Presentation;
+using Core.Infrastructure.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,10 @@ builder.Services.AddHealthChecks()
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
+builder.Services.AddAuthorization();
+builder.Services
+    .AddIdentityApiEndpoints<User>()
+    .AddEntityFrameworkStores<AppDbContext>();
 
 var app = builder.Build();
 
@@ -49,5 +54,6 @@ using (var scope = app.Services.CreateScope())
 
 app.UseExceptionHandler();
 app.MapHealthChecks("/health");
+app.MapIdentityApi<User>();
 
 app.Run();
