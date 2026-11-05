@@ -2,6 +2,7 @@
   <Folder Name="/Source/">
     <Project Path="Source/Core.Domain/Core.Domain.csproj" />
     <Project Path="Source/Core.Infrastructure/Core.Infrastructure.csproj" />
+    <Project Path="Source/Core.Presentation/Core.Presentation.csproj" />
     <Project Path="Source/Core.Services/Core.Services.csproj" />
   </Folder>
   <Folder Name="/Tests/">
