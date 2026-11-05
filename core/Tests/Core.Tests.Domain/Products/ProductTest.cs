@@ -47,7 +47,7 @@ public class ProductTest
     [Fact]
     public void ProductValidationWorks()
     {
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Product(
                 invalidId, 
@@ -59,7 +59,7 @@ public class ProductTest
                 attributes
             );
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Product(
                 id, 
@@ -71,7 +71,7 @@ public class ProductTest
                 attributes
             );
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Product(
                 id, 
@@ -83,7 +83,7 @@ public class ProductTest
                 attributes
             );
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Product(
                 id, 
@@ -95,7 +95,7 @@ public class ProductTest
                 attributes
             );
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Product(
                 id, 
@@ -107,7 +107,7 @@ public class ProductTest
                 attributes
             );
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Product(
                 id, 
@@ -119,7 +119,7 @@ public class ProductTest
                 attributes
             );
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Product(
                 id, 
@@ -131,7 +131,7 @@ public class ProductTest
                 attributes
             );
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Product(
                 id, 

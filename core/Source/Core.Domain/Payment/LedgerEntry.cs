@@ -52,10 +52,10 @@ public record LedgerEntry
     )
     {
         if(id == Guid.Empty)
-            throw new ArgumentException("Invalid ledger entry id");
+            throw new ValidationException("Invalid ledger entry id");
         if(accountId == Guid.Empty)
-            throw new ArgumentException("Invalid ledger entry account id");
+            throw new ValidationException("Invalid ledger entry account id");
         if(decimal.IsNegative(amount))
-            throw new ArgumentException("Invalid ledger entry amount");
+            throw new ValidationException("Invalid ledger entry amount");
     }
 }

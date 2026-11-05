@@ -30,7 +30,7 @@ public class UserAuthTest
     [Fact]
     public void UserAuthValidationWorks()
     {
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             UserAuth userAuth = new UserAuth(
                 invalidId,
@@ -40,7 +40,7 @@ public class UserAuthTest
             );
         });
 
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             UserAuth userAuth = new UserAuth(
                 id,
@@ -50,7 +50,7 @@ public class UserAuthTest
             );
         });
 
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             UserAuth userAuth = new UserAuth(
                 id,

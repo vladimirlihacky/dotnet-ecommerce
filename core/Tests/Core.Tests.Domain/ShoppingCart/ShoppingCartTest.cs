@@ -23,7 +23,7 @@ public class ShoppingCartTest
     [Fact]
     public void ShoppingCartValidationWorks()
     {
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             ShoppingCart shoppingCart = new ShoppingCart(
                 invalidId,

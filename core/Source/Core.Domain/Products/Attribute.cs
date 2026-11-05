@@ -37,9 +37,9 @@ public record struct SearchAttribute
     public void Validate(string attrType, string name)
     {
         if (string.IsNullOrEmpty(attrType))
-            throw new ArgumentException("Invalid attribute type");
+            throw new ValidationException("Invalid attribute type");
         if (string.IsNullOrEmpty(name))
-            throw new ArgumentException("Invalid attribute name");
+            throw new ValidationException("Invalid attribute name");
     }
 }
 
@@ -72,9 +72,9 @@ public record struct ProductAttribute
     )
     {
         if (string.IsNullOrEmpty(attrType))
-            throw new ArgumentException("Invalid attribute type");
+            throw new ValidationException("Invalid attribute type");
         if (string.IsNullOrEmpty(name))
-            throw new ArgumentException("Invalid attribute name");
+            throw new ValidationException("Invalid attribute name");
         ValidateValue(value);
     }
 

@@ -36,7 +36,7 @@ public class LedgerEntryTest
     [Fact]
     public void LedgerEntryValidationWorks()
     {
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new LedgerEntry(
                 invalidId,
@@ -47,7 +47,7 @@ public class LedgerEntryTest
                 timestamp
             );
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new LedgerEntry(
                 id,
@@ -58,7 +58,7 @@ public class LedgerEntryTest
                 timestamp
             );
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new LedgerEntry(
                 id,

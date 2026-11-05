@@ -33,7 +33,7 @@ public class UserTest
     [Fact]
     public void UserValidationWorks()
     {
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             User user = new User(
                 invalidId,
@@ -44,7 +44,7 @@ public class UserTest
             );
         });
 
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             User user = new User(
                 userId,
@@ -55,7 +55,7 @@ public class UserTest
             );
         });
 
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             User user = new User(
                 userId,
@@ -66,7 +66,7 @@ public class UserTest
             );
         });
 
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             User user = new User(
                 userId,
@@ -77,7 +77,7 @@ public class UserTest
             );
         });
 
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             User user = new User(
                 userId,
@@ -108,6 +108,6 @@ public class UserTest
 
         Assert.Equal(newName, user.Name);
         
-        Assert.Throws<ArgumentException>(() => user.SetName(""));
+        Assert.Throws<ValidationException>(() => user.SetName(""));
     }
 }

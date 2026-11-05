@@ -31,7 +31,7 @@ public class ShoppingCartEntryTest
     [Fact]
     public void ShoppingCartEntryValidationWorks()
     {
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             ShoppingCartEntry entry = new ShoppingCartEntry(
                 invalidId,
@@ -41,7 +41,7 @@ public class ShoppingCartEntryTest
             );
         });
         
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             ShoppingCartEntry entry = new ShoppingCartEntry(
                 id,
@@ -51,7 +51,7 @@ public class ShoppingCartEntryTest
             );
         });
 
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             ShoppingCartEntry entry = new ShoppingCartEntry(
                 id,
@@ -61,7 +61,7 @@ public class ShoppingCartEntryTest
             );
         });
 
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             ShoppingCartEntry entry = new ShoppingCartEntry(
                 id,

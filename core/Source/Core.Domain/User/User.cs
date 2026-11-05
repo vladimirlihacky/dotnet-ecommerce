@@ -40,13 +40,13 @@ public class User
     {
         if(string.IsNullOrEmpty(name))
         {
-            throw new ArgumentException("User name should be provided");
+            throw new ValidationException("User name should be provided");
         }
 
         Name = name;
     }
 
-    public void Validate(
+    protected static void Validate(
         Guid id, 
         Guid accountId, 
         Guid profileId, 
@@ -55,14 +55,14 @@ public class User
     )
     {
         if(id == Guid.Empty)
-            throw new ArgumentException("Invalid user id");
+            throw new ValidationException("Invalid user id");
         if(accountId == Guid.Empty)
-            throw new ArgumentException("Invalid user account id");
+            throw new ValidationException("Invalid user account id");
         if(profileId == Guid.Empty)
-            throw new ArgumentException("Invalid user profile id");
+            throw new ValidationException("Invalid user profile id");
         if(shoppingCartId == Guid.Empty)
-            throw new ArgumentException("Invalid user shopping cart id");
+            throw new ValidationException("Invalid user shopping cart id");
         if(string.IsNullOrEmpty(name))
-            throw new ArgumentException("Invalid user name");
+            throw new ValidationException("Invalid user name");
     }
 }

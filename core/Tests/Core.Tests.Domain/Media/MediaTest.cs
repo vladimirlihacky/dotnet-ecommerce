@@ -21,7 +21,7 @@ public class MediaTest
     [Fact]
     public void MediaValidationWorks()
     {
-        Assert.Throws<ArgumentException>(() => { new Media(invalidId, path); });
-        Assert.Throws<ArgumentException>(() => { new Media(id, invalidPath); });
+        Assert.Throws<ValidationException>(() => { new Media(invalidId, path); });
+        Assert.Throws<ValidationException>(() => { new Media(id, invalidPath); });
     }
 }

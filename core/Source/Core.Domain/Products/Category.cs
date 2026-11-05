@@ -36,13 +36,13 @@ public class Category
     )
     {
         if(id == Guid.Empty)
-            throw new ArgumentException("Invalid category id");
+            throw new ValidationException("Invalid category id");
         if(string.IsNullOrEmpty(name))
-            throw new ArgumentException("Invalid category name");
+            throw new ValidationException("Invalid category name");
         if(parentCategoryId == Guid.Empty)
-            throw new ArgumentException("Invalid category parent id");
+            throw new ValidationException("Invalid category parent id");
         if(attributes.Distinct().Count() != attributes.Count())
-            throw new ArgumentException("Invalid category attributes");
+            throw new ValidationException("Invalid category attributes");
     }
 
     public void Update(

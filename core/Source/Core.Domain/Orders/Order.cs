@@ -42,9 +42,9 @@ public class Order
     )
     {
         if(id == Guid.Empty)
-            throw new ArgumentException("Invalid order id");
+            throw new ValidationException("Invalid order id");
         if(userId == Guid.Empty)
-            throw new ArgumentException("Invalid order user id");
+            throw new ValidationException("Invalid order user id");
     }
 
     public static bool CheckOrderStatusTransition(OrderStatus from, OrderStatus to)
@@ -69,7 +69,7 @@ public class Order
         bool isValidStatusChange = CheckOrderStatusTransition(Status, newStatus);
 
         if(!isValidStatusChange)
-            throw new InvalidOperationException("Invalid order status change");
+            throw new InvalidStateTransitionException("Invalid order status change");
         
         Status = newStatus;
     }

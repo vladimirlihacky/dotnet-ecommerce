@@ -46,10 +46,10 @@ public record OrderStatusHistoryEntry
     )
     {
         if(id == Guid.Empty)
-            throw new ArgumentException("Invalid order status history entry id");
+            throw new ValidationException("Invalid order status history entry id");
         if(orderId == Guid.Empty)
-            throw new ArgumentException("Invalid order status history entry order id");
+            throw new ValidationException("Invalid order status history entry order id");
         if(string.IsNullOrEmpty(cause))
-            throw new ArgumentException("Invalid order status history entry cause");
+            throw new ValidationException("Invalid order status history entry cause");
     }
 }

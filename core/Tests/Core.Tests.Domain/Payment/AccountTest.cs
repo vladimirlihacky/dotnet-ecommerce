@@ -33,7 +33,7 @@ public class AccountTest
     [Fact]
     public void AccountValidationWorks()
     {
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Account(
                 invalidId,
@@ -43,7 +43,7 @@ public class AccountTest
                 balance
             );
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Account(
                 id,
@@ -53,7 +53,7 @@ public class AccountTest
                 balance
             );
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Account(
                 id,
@@ -97,7 +97,7 @@ public class AccountTest
         
         decimal negativeAmount = -1; 
 
-        Assert.Throws<ArgumentException>(() => account.Credit(negativeAmount));
+        Assert.Throws<ValidationException>(() => account.Credit(negativeAmount));
     }
 
     [Fact]
@@ -132,7 +132,7 @@ public class AccountTest
         
         decimal negativeAmount = -1; 
 
-        Assert.Throws<ArgumentException>(() => account.Debit(negativeAmount));
+        Assert.Throws<ValidationException>(() => account.Debit(negativeAmount));
     }
 
     [Fact]
@@ -149,6 +149,6 @@ public class AccountTest
             balance
         );
 
-        Assert.Throws<InvalidOperationException>(() => account.Debit(amount));
+        Assert.Throws<InvalidStateTransitionException>(() => account.Debit(amount));
     }
 }

@@ -15,6 +15,6 @@ public class DeliveryInfoTest
     [Fact]
     public void DeliveryInfoValidationWorks()
     {
-        Assert.Throws<ArgumentException>(() => { new DeliveryInfo(""); });
+        Assert.Throws<ValidationException>(() => { new DeliveryInfo(""); });
     }
 }

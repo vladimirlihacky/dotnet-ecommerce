@@ -30,11 +30,11 @@ public class SearchAttributeTest {
     [Fact]
     public void SearchAttributeValidationWorks()
     {
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new SearchAttribute(invalidAttrType, name);
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new SearchAttribute(attrType, invalidName);
         });
@@ -72,11 +72,11 @@ public class ProductAttributeTest {
     [Fact]
     public void ProductAttributeValidationWorks()
     {
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new ProductAttribute(invalidAttrType, name, value);
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new ProductAttribute(attrType, invalidName, value);
         });

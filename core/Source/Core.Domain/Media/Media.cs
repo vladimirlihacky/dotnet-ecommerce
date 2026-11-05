@@ -17,8 +17,8 @@ public record Media
     public void Validate(Guid id, string path)
     {
         if (id == Guid.Empty)
-            throw new ArgumentException("Invalid media id");
+            throw new ValidationException("Invalid media id");
         if (string.IsNullOrEmpty(path))
-            throw new ArgumentException("Invalid media");
+            throw new ValidationException("Invalid media");
     }
 }

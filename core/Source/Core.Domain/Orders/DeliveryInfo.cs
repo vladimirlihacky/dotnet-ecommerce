@@ -15,6 +15,6 @@ public record DeliveryInfo
     public void Validate(string address)
     {
         if(string.IsNullOrEmpty(address))
-            throw new ArgumentException("Invalid delivery address");
+            throw new ValidationException("Invalid delivery address");
     }
 }

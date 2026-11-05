@@ -34,7 +34,7 @@ public class OrderStatusHistoryEntryTest
     [Fact]
     public void OrderStatusHistoryEntryValidationWorks()
     {
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new OrderStatusHistoryEntry(
                 invalidId,
@@ -45,7 +45,7 @@ public class OrderStatusHistoryEntryTest
                 timestamp
             ); 
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new OrderStatusHistoryEntry(
                 id,
@@ -56,7 +56,7 @@ public class OrderStatusHistoryEntryTest
                 timestamp
             ); 
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new OrderStatusHistoryEntry(
                 id,

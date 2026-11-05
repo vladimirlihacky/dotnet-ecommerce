@@ -34,7 +34,7 @@ public class CategoryTest
     [Fact]
     public void CategoryValidationWorks()
     {
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Category(
                 invalidId,
@@ -43,7 +43,7 @@ public class CategoryTest
                 attributes
             );
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Category(
                 id,
@@ -52,7 +52,7 @@ public class CategoryTest
                 attributes
             );
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Category(
                 id,
@@ -61,7 +61,7 @@ public class CategoryTest
                 attributes
             );
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Category(
                 id,

@@ -21,11 +21,11 @@ public class WarehouseEntryTest
     [Fact]
     public void WarehouseEntryValidationWorks()
     {
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new WarehouseEntry(invalidProductId, quantity);
         });
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new WarehouseEntry(productId, invalidQuantity);
         });
@@ -41,6 +41,6 @@ public class WarehouseEntryTest
         entry.SetQuantity(updatedQuantity);
 
         Assert.Equal(updatedQuantity, entry.Quantity);
-        Assert.Throws<ArgumentException>(() => entry.SetQuantity(invalidQuantity));
+        Assert.Throws<ValidationException>(() => entry.SetQuantity(invalidQuantity));
     }
 }

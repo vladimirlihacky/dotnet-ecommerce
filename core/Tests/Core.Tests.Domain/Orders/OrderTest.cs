@@ -52,7 +52,7 @@ public class OrderTest
     [Fact]
     public void OrderValidationWorks()
     {
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Order(
                 invalidId,
@@ -63,7 +63,7 @@ public class OrderTest
             );
         });
 
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             new Order(
                 id,

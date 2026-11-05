@@ -22,9 +22,9 @@ public record WarehouseEntry
     public void Validate(Guid productId, int quantity)
     {
         if(productId == Guid.Empty)
-            throw new ArgumentException("Invalid warehouse entry product id");
+            throw new ValidationException("Invalid warehouse entry product id");
         if(int.IsNegative(quantity))
-            throw new ArgumentException("Invalid warehouse entry quantity");
+            throw new ValidationException("Invalid warehouse entry quantity");
     }
 
     public void SetQuantity(int quantity)

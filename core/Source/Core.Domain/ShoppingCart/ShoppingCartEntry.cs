@@ -36,12 +36,12 @@ public record ShoppingCartEntry
     )
     {
         if(id == Guid.Empty)
-            throw new ArgumentException("Invalid shopping cart entry id");
+            throw new ValidationException("Invalid shopping cart entry id");
         if(shoppingCartId == Guid.Empty)
-            throw new ArgumentException("Invalid shopping cart id");
+            throw new ValidationException("Invalid shopping cart id");
         if(productId == Guid.Empty)
-            throw new ArgumentException("Invalid shopping cart entry product id");
+            throw new ValidationException("Invalid shopping cart entry product id");
         if(int.IsNegative(quantity))
-            throw new ArgumentException("Invalid shopping cart entry amount");
+            throw new ValidationException("Invalid shopping cart entry amount");
     }
 }

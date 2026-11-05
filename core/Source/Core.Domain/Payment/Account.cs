@@ -49,18 +49,18 @@ public class Account
     )
     {
         if(id == Guid.Empty)
-            throw new ArgumentException("Invalid account id");
+            throw new ValidationException("Invalid account id");
         if(ownerId == Guid.Empty)
-            throw new ArgumentException("Invalid account owner id");
+            throw new ValidationException("Invalid account owner id");
         if(decimal.IsNegative(balance))
-            throw new ArgumentException("Invalid balance");
+            throw new ValidationException("Invalid balance");
     }
 
     public void Credit(decimal amount)
     {
         if(amount < 0)
         {
-            throw new ArgumentException("Credit amount should be positive");
+            throw new ValidationException("Credit amount should be positive");
         }
 
         Balance = Balance + amount;
@@ -70,11 +70,11 @@ public class Account
     {
         if(amount < 0)
         {
-            throw new ArgumentException("Debit amount should be positive");
+            throw new ValidationException("Debit amount should be positive");
         }
         if(Balance < amount)
         {
-            throw new InvalidOperationException("Account balance should be positive");
+            throw new InvalidStateTransitionException("Account balance should be positive");
         }
 
         Balance = Balance - amount;

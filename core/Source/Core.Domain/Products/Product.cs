@@ -52,17 +52,17 @@ public class Product
     )
     {
         if(id == Guid.Empty)
-            throw new ArgumentException("Invalid product id");
+            throw new ValidationException("Invalid product id");
         if(categoryId == Guid.Empty)
-            throw new ArgumentException("Invalid product category id");
+            throw new ValidationException("Invalid product category id");
         if(string.IsNullOrEmpty(name))
-            throw new ArgumentException("Invalid product name");
+            throw new ValidationException("Invalid product name");
         if(decimal.IsNegative(cost))
-            throw new ArgumentException("Invalid product cost");
+            throw new ValidationException("Invalid product cost");
         if(decimal.IsNegative(discount) || discount > 1)
-            throw new ArgumentException("Invalid product discount");
+            throw new ValidationException("Invalid product discount");
         if(attributes.Distinct().Count() != attributes.Count())
-            throw new ArgumentException("Duplicate product attributes");
+            throw new ValidationException("Duplicate product attributes");
     }
 
     public void Update(

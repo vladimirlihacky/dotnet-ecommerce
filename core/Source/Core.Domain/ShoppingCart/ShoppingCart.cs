@@ -23,7 +23,7 @@ public class ShoppingCart
     )
     {
         if(id == Guid.Empty)
-            throw new ArgumentException("Invalid shopping cart id");
+            throw new ValidationException("Invalid shopping cart id");
     }
 
     public void Update(List<ShoppingCartEntry> entries)

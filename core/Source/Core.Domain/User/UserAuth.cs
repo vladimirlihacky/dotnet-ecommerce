@@ -42,7 +42,7 @@ public class UserAuth
         Credentials = credentials;
     }
 
-    public void Validate(
+    protected static void Validate(
         Guid id, 
         Guid userId, 
         UserAuthType authType,
@@ -50,10 +50,10 @@ public class UserAuth
     )
     {
         if(id == Guid.Empty)
-            throw new ArgumentException("Invalid auth id");
+            throw new ValidationException("Invalid auth id");
         if(userId == Guid.Empty)
-            throw new ArgumentException("Invalid auth user id");
+            throw new ValidationException("Invalid auth user id");
         if(string.IsNullOrEmpty(credentials))
-            throw new ArgumentException("Invalid auth credentials");
+            throw new ValidationException("Invalid auth credentials");
     }
 }
