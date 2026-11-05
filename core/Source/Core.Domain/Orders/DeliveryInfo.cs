@@ -1,19 +1,27 @@
 namespace Core.Domain;
 
 
-public record DeliveryInfo
+public class DeliveryInfo
 {
-    public string Address { get; private set; }
+    public Guid Id { get; set; }
+    public string Address { get; private set; } = string.Empty;
 
-    public DeliveryInfo(string address)
+    public DeliveryInfo(Guid id, string address)
     {
-        Validate(address);
+        Validate(id, address);
         
+        Id = id; 
         Address = address;
     }
 
-    public void Validate(string address)
+    private DeliveryInfo()
     {
+    }
+
+    private static void Validate(Guid id, string address)
+    {
+        if(id == Guid.Empty)
+            throw new ValidationException("Invalid delivery info id");    
         if(string.IsNullOrEmpty(address))
             throw new ValidationException("Invalid delivery address");
     }

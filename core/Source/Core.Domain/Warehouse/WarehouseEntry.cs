@@ -6,21 +6,29 @@ namespace Core.Domain;
 добавить WarehouseId.
 */
 
-public record WarehouseEntry
+public class WarehouseEntry
 {
-    public readonly Guid ProductId;
+    public Guid Id { get; private set; }
+    public Guid ProductId { get; private set; }
     public int Quantity { get; private set; }
 
-    public WarehouseEntry(Guid productId, int quantity)
+    public WarehouseEntry(Guid id, Guid productId, int quantity)
     {
-        Validate(productId, quantity);
-
+        Validate(id, productId, quantity);
+        
+        Id = id;
         ProductId = productId;
         Quantity = quantity;
-    } 
+    }
 
-    public void Validate(Guid productId, int quantity)
+    private WarehouseEntry()
     {
+    }
+
+    private static void Validate(Guid id, Guid productId, int quantity)
+    {
+        if(id == Guid.Empty)
+            throw new ValidationException("Invalid warehouse entry id");
         if(productId == Guid.Empty)
             throw new ValidationException("Invalid warehouse entry product id");
         if(int.IsNegative(quantity))
@@ -29,7 +37,7 @@ public record WarehouseEntry
 
     public void SetQuantity(int quantity)
     {
-        Validate(ProductId, quantity);
+        Validate(Id, ProductId, quantity);
 
         Quantity = quantity;
     }

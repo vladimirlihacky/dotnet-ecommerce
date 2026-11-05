@@ -7,7 +7,7 @@ public class OrderTest
     private Guid id = Guid.CreateVersion7();
     private Guid userId = Guid.CreateVersion7();
     private OrderStatus status = OrderStatus.Created;
-    private DeliveryInfo delivery = new DeliveryInfo("address");
+    private DeliveryInfo delivery = new DeliveryInfo(Guid.CreateVersion7(), "address");
     private List<OrderEntry> entries = [
         new OrderEntry(
             Guid.CreateVersion7(),
@@ -36,14 +36,12 @@ public class OrderTest
     {
         Order order = new Order(
             id,
-            userId,
             status,
             delivery,
             entries
         );
 
         Assert.Equal(id, order.Id);
-        Assert.Equal(userId, order.UserId);
         Assert.Equal(status, order.Status);
         Assert.Equal(delivery, order.Delivery);
         Assert.Equal(entries, order.Entries);
@@ -55,18 +53,6 @@ public class OrderTest
         Assert.Throws<ValidationException>(() =>
         {
             new Order(
-                invalidId,
-                userId,
-                status,
-                delivery,
-                entries
-            );
-        });
-
-        Assert.Throws<ValidationException>(() =>
-        {
-            new Order(
-                id,
                 invalidId,
                 status,
                 delivery,
@@ -157,7 +143,6 @@ public class OrderTest
     {
         Order order = new Order(
             id,
-            userId,
             OrderStatus.Created,
             delivery,
             entries
@@ -194,7 +179,6 @@ public class OrderTest
 
         Order order = new Order(
             id,
-            userId,
             status,
             delivery,
             entries

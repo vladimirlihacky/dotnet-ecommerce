@@ -1,12 +1,12 @@
 namespace Core.Domain;
 
 
-public record ShoppingCartEntry
+public class ShoppingCartEntry
 {
-    public readonly Guid Id;
-    public readonly Guid ShoppingCartId;
-    public readonly Guid ProductId;
-    public readonly int Quantity;
+    public Guid Id { get; private set; }
+    public Guid ShoppingCartId { get; private set; }
+    public Guid ProductId { get; private set; }
+    public int Quantity { get; private set; }
 
     public ShoppingCartEntry(
         Guid id, 
@@ -28,7 +28,21 @@ public record ShoppingCartEntry
         Quantity = quantity;
     }
 
-    public void Validate(
+    private ShoppingCartEntry()
+    {
+    }
+
+    public void SetQuantity(int quantity)
+    {
+        if(int.IsNegative(quantity))
+        {
+            throw new ValidationException("Invalid shopping cart entry amount");
+        }
+
+        Quantity = quantity;
+    }
+
+    private static void Validate(
         Guid id, 
         Guid shoppingCartId, 
         Guid productId, 

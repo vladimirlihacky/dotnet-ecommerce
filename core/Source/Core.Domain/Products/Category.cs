@@ -3,10 +3,11 @@ namespace Core.Domain;
 
 public class Category
 {
-    public readonly Guid Id; 
-    public string Name { get; private set; }
+    public Guid Id { get; private set; } 
+    public string Name { get; private set; } = string.Empty;
     public Guid? ParentCategoryId { get; private set; }
-    public List<SearchAttribute> Attributes { get; private set; }
+    private List<SearchAttribute> _attributes { get; set; } = [];
+    public IReadOnlyList<SearchAttribute> Attributes => _attributes;
 
     public Category(
         Guid id, 
@@ -25,10 +26,14 @@ public class Category
         Id = id; 
         Name = name; 
         ParentCategoryId = parentCategoryId;
-        Attributes = attributes;
+        _attributes = attributes;
     }
 
-    public void Validate(
+    private Category()
+    {
+    }
+
+    private static void Validate(
         Guid id, 
         string name, 
         Guid? parentCategoryId, 
@@ -41,7 +46,7 @@ public class Category
             throw new ValidationException("Invalid category name");
         if(parentCategoryId == Guid.Empty)
             throw new ValidationException("Invalid category parent id");
-        if(attributes.Distinct().Count() != attributes.Count())
+        if(attributes.DistinctBy(a => a.Name).Count() != attributes.Count())
             throw new ValidationException("Invalid category attributes");
     }
 
@@ -60,6 +65,6 @@ public class Category
 
         Name = name; 
         ParentCategoryId = parentCategoryId;
-        Attributes = attributes;
+        _attributes = attributes;
     }
 }

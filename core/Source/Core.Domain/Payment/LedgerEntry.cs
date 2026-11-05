@@ -7,21 +7,21 @@ public enum OperationType
     Credit,
 }
 
-public record LedgerEntry
+public class LedgerEntry
 {
-    public readonly Guid Id;
-    public readonly Guid AccountId;
-    public readonly OperationType Operation; 
-    public readonly decimal Amount;
-    public readonly Currency Currency;
-    public readonly DateTimeOffset Timestamp;
+    public Guid Id { get; private set; }
+    public Guid AccountId { get; private set; }
+    public OperationType Operation { get; private set; }
+    public decimal Amount { get; private set; }
+    public Currency Currency { get; private set; }
+    public DateTimeOffset Timestamp { get; private set; }
 
     public LedgerEntry(
-        Guid id, 
-        Guid accountId, 
-        OperationType operation, 
+        Guid id,
+        Guid accountId,
+        OperationType operation,
         decimal amount,
-        Currency currency, 
+        Currency currency,
         DateTimeOffset timestamp
     )
     {
@@ -34,28 +34,32 @@ public record LedgerEntry
             timestamp
         );
 
-        Id = id; 
+        Id = id;
         AccountId = accountId;
         Operation = operation;
-        Amount = amount; 
+        Amount = amount;
         Currency = currency;
         Timestamp = timestamp;
     }
 
-    public void Validate(
-        Guid id, 
-        Guid accountId, 
-        OperationType operation, 
+    private LedgerEntry()
+    {
+    }
+
+    private static void Validate(
+        Guid id,
+        Guid accountId,
+        OperationType operation,
         decimal amount,
-        Currency currency, 
+        Currency currency,
         DateTimeOffset timestamp
     )
     {
-        if(id == Guid.Empty)
+        if (id == Guid.Empty)
             throw new ValidationException("Invalid ledger entry id");
-        if(accountId == Guid.Empty)
+        if (accountId == Guid.Empty)
             throw new ValidationException("Invalid ledger entry account id");
-        if(decimal.IsNegative(amount))
+        if (decimal.IsNegative(amount))
             throw new ValidationException("Invalid ledger entry amount");
     }
 }

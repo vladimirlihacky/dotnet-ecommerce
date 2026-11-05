@@ -1,10 +1,12 @@
 namespace Core.Domain;
 
 
-public record Media
+public class Media
 {
-    public readonly Guid Id;
-    public readonly string Path;
+    public Guid Id { get; private set; }
+    public string Path { get; private set; } = string.Empty;
+
+    private Media(){}
 
     public Media(Guid id, string path)
     {
@@ -14,7 +16,7 @@ public record Media
         Path = path;
     }
 
-    public void Validate(Guid id, string path)
+    private static void Validate(Guid id, string path)
     {
         if (id == Guid.Empty)
             throw new ValidationException("Invalid media id");

@@ -3,14 +3,16 @@ namespace Core.Domain;
 
 public class Product
 {
-    public readonly Guid Id; 
+    public Guid Id { get; private set; } 
     public Guid CategoryId { get; private set; } 
-    public string Name { get; private set; }
+    public string Name { get; private set; } = string.Empty;
     public decimal Cost { get; private set; }
     public decimal Discount { get; private set; }
     public decimal DiscountedCost => Cost * (1 - Discount);
-    public List<Media> Thumbnails { get; private set; }
-    public List<ProductAttribute> Attributes { get; private set; }
+    private List<Media> _thumbnails { get; set; } = [];
+    public IReadOnlyList<Media> Thumbnails => _thumbnails;
+    private List<ProductAttribute> _attributes { get; set; } = [];
+    public IReadOnlyList<ProductAttribute> Attributes => _attributes;
     
     public Product(
         Guid id, 
@@ -37,11 +39,15 @@ public class Product
         Name = name;
         Cost = cost; 
         Discount = discount; 
-        Thumbnails = thumbnails;
-        Attributes = attributes;
+        _thumbnails = thumbnails;
+        _attributes = attributes;
     }
 
-    public void Validate(
+    private Product()
+    {
+    }
+
+    private static void Validate(
         Guid id, 
         Guid categoryId, 
         string name, 
@@ -61,7 +67,7 @@ public class Product
             throw new ValidationException("Invalid product cost");
         if(decimal.IsNegative(discount) || discount > 1)
             throw new ValidationException("Invalid product discount");
-        if(attributes.Distinct().Count() != attributes.Count())
+        if(attributes.DistinctBy(a => a.Name).Count() != attributes.Count())
             throw new ValidationException("Duplicate product attributes");
     }
 
@@ -88,7 +94,7 @@ public class Product
         Name = name;
         Cost = cost; 
         Discount = discount; 
-        Thumbnails = thumbnails;
-        Attributes = attributes;
+        _thumbnails = thumbnails;
+        _attributes = attributes;
     }
 }

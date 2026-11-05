@@ -1,64 +1,61 @@
-namespace Core.Domain; 
+namespace Core.Domain;
 
 
 public enum AccountType
 {
-    System, 
-    Hold, 
+    System,
+    Hold,
     User,
 }
 
 public class Account
 {
-    public readonly Guid Id; 
-    public readonly Guid OwnerId;
-    public readonly AccountType Type;
-    public readonly Currency Currency;
+    public Guid Id { get; private set; }
+    public AccountType Type { get; private set; }
+    public Currency Currency { get; private set; }
     public decimal Balance { get; private set; }
 
     public Account(
-        Guid id, 
-        Guid ownerId, 
-        AccountType accountType, 
+        Guid id,
+        AccountType accountType,
         Currency currency,
         decimal balance = 0
     )
     {
         Validate(
             id,
-            ownerId,
             accountType,
             currency,
             balance
         );
 
-        Id = id; 
-        OwnerId = ownerId; 
-        Type = accountType; 
+        Id = id;
+        Type = accountType;
         Currency = currency;
         Balance = balance;
 
     }
 
-    public void Validate(
-        Guid id, 
-        Guid ownerId, 
-        AccountType accountType, 
+    private Account()
+    {
+    }
+
+    private static void Validate(
+        Guid id,
+        AccountType accountType,
         Currency currency,
         decimal balance = 0
     )
     {
-        if(id == Guid.Empty)
+        if (id == Guid.Empty)
             throw new ValidationException("Invalid account id");
-        if(ownerId == Guid.Empty)
-            throw new ValidationException("Invalid account owner id");
-        if(decimal.IsNegative(balance))
+        if (decimal.IsNegative(balance))
             throw new ValidationException("Invalid balance");
     }
 
     public void Credit(decimal amount)
     {
-        if(amount < 0)
+        if (amount < 0)
         {
             throw new ValidationException("Credit amount should be positive");
         }
@@ -68,11 +65,11 @@ public class Account
 
     public void Debit(decimal amount)
     {
-        if(amount < 0)
+        if (amount < 0)
         {
             throw new ValidationException("Debit amount should be positive");
         }
-        if(Balance < amount)
+        if (Balance < amount)
         {
             throw new InvalidStateTransitionException("Account balance should be positive");
         }

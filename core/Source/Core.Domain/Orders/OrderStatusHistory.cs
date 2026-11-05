@@ -1,55 +1,59 @@
 namespace Core.Domain;
 
 
-public record OrderStatusHistoryEntry
+public class OrderStatusHistoryEntry
 {
-    public readonly Guid Id; 
-    public readonly Guid OrderId; 
-    public readonly OrderStatus FromStatus; 
-    public readonly OrderStatus ToStatus;
-    public readonly string Cause; 
-    public readonly DateTimeOffset Timestamp;
+    public Guid Id { get; private set; }
+    public Guid OrderId { get; private set; }
+    public OrderStatus FromStatus { get; private set; }
+    public OrderStatus ToStatus { get; private set; }
+    public string Cause { get; private set; } = string.Empty;
+    public DateTimeOffset Timestamp { get; private set; }
 
     public OrderStatusHistoryEntry(
-        Guid id, 
-        Guid orderId, 
+        Guid id,
+        Guid orderId,
         OrderStatus from,
-        OrderStatus to, 
-        string cause, 
+        OrderStatus to,
+        string cause,
         DateTimeOffset timestamp
     )
     {
         Validate(
-            id, 
-            orderId, 
+            id,
+            orderId,
             from,
             to,
             cause,
             timestamp
         );
 
-        Id = id; 
-        OrderId = orderId; 
-        FromStatus = from; 
-        ToStatus = to; 
-        Cause = cause; 
+        Id = id;
+        OrderId = orderId;
+        FromStatus = from;
+        ToStatus = to;
+        Cause = cause;
         Timestamp = timestamp;
     }
 
-    public void Validate(
-        Guid id, 
-        Guid orderId, 
+    private OrderStatusHistoryEntry()
+    {
+    }
+
+    private static void Validate(
+        Guid id,
+        Guid orderId,
         OrderStatus from,
-        OrderStatus to, 
-        string cause, 
+        OrderStatus to,
+        string cause,
         DateTimeOffset timestamp
     )
     {
-        if(id == Guid.Empty)
+        if (id == Guid.Empty)
             throw new ValidationException("Invalid order status history entry id");
-        if(orderId == Guid.Empty)
+        if (orderId == Guid.Empty)
             throw new ValidationException("Invalid order status history entry order id");
-        if(string.IsNullOrEmpty(cause))
+        if (string.IsNullOrEmpty(cause))
             throw new ValidationException("Invalid order status history entry cause");
     }
 }

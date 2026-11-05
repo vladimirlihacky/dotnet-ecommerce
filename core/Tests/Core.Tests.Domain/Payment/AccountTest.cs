@@ -5,7 +5,6 @@ using Core.Domain;
 public class AccountTest
 {
     private Guid id = Guid.CreateVersion7();
-    private Guid ownerId = Guid.CreateVersion7();
     private AccountType accountType = AccountType.System;
     private Currency currency = Currency.RUB;
     private decimal balance = 100;
@@ -17,14 +16,12 @@ public class AccountTest
     {
         Account account = new Account(
             id,
-            ownerId,
             accountType,
             currency,
             balance
         );
 
         Assert.Equal(id, account.Id);
-        Assert.Equal(ownerId, account.OwnerId);
         Assert.Equal(accountType, account.Type);
         Assert.Equal(currency, account.Currency);
         Assert.Equal(balance, account.Balance);
@@ -37,7 +34,6 @@ public class AccountTest
         {
             new Account(
                 invalidId,
-                ownerId,
                 accountType,
                 currency,
                 balance
@@ -47,17 +43,6 @@ public class AccountTest
         {
             new Account(
                 id,
-                invalidId,
-                accountType,
-                currency,
-                balance
-            );
-        });
-        Assert.Throws<ValidationException>(() =>
-        {
-            new Account(
-                id,
-                ownerId,
                 accountType,
                 currency,
                 invalidBalance
@@ -73,7 +58,6 @@ public class AccountTest
         
         Account account = new Account(
             id,
-            ownerId,
             accountType,
             currency,
             balance
@@ -89,7 +73,6 @@ public class AccountTest
     {
         Account account = new Account(
             id,
-            ownerId,
             accountType,
             currency,
             balance
@@ -108,7 +91,6 @@ public class AccountTest
         
         Account account = new Account(
             id,
-            ownerId,
             accountType,
             currency,
             balance
@@ -124,7 +106,6 @@ public class AccountTest
     {
         Account account = new Account(
             id,
-            ownerId,
             accountType,
             currency,
             balance
@@ -143,7 +124,6 @@ public class AccountTest
 
         Account account = new Account(
             id,
-            ownerId,
             accountType,
             currency,
             balance

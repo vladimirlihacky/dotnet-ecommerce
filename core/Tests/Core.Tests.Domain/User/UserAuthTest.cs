@@ -24,7 +24,7 @@ public class UserAuthTest
         Assert.Equal(id, userAuth.Id);
         Assert.Equal(userId, userAuth.UserId);
         Assert.Equal(authType, userAuth.Type);
-        Assert.Equal(credentials, userAuth.Credentials);
+        Assert.Equal(credentials, userAuth.Claim);
     }
 
     [Fact]

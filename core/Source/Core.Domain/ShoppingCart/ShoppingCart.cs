@@ -3,8 +3,10 @@ namespace Core.Domain;
 
 public class ShoppingCart
 {
-    public readonly Guid Id;
-    public List<ShoppingCartEntry> Entries { get; private set; }
+    private ShoppingCart(){}
+    public Guid Id { get; private set; }
+    private List<ShoppingCartEntry> _entries { get; set; } = [];
+    public IReadOnlyList<ShoppingCartEntry> Entries => _entries;
 
     public ShoppingCart(
         Guid id, 
@@ -14,10 +16,10 @@ public class ShoppingCart
         Validate(id, entries);
 
         Id = id; 
-        Entries = entries;
+        _entries = entries;
     }
 
-    public void Validate(
+    private static void Validate(
         Guid id, 
         List<ShoppingCartEntry> entries
     )
@@ -30,12 +32,12 @@ public class ShoppingCart
     {
         Validate(Id, entries);
 
-        Entries = entries;
+        _entries = entries;
     }
 
     public void Clear()
     {
-        Entries.Clear();
+        _entries.Clear();
     }
 }
 

@@ -4,15 +4,16 @@ using Core.Domain;
 
 public class WarehouseEntryTest
 {
+    private Guid entryId = Guid.CreateVersion7();
     private Guid productId = Guid.CreateVersion7();
     private int quantity = 10;
-    private Guid invalidProductId = Guid.Empty;
+    private Guid invalidId = Guid.Empty;
     private int invalidQuantity = -1;
 
     [Fact]
     public void CreateWarehouseEntryWorks()
     {
-        WarehouseEntry entry = new WarehouseEntry(productId, quantity);
+        WarehouseEntry entry = new WarehouseEntry(entryId, productId, quantity);
 
         Assert.Equal(productId, entry.ProductId);
         Assert.Equal(quantity, entry.Quantity);
@@ -23,18 +24,22 @@ public class WarehouseEntryTest
     {
         Assert.Throws<ValidationException>(() =>
         {
-            new WarehouseEntry(invalidProductId, quantity);
+            new WarehouseEntry(invalidId, productId, quantity);
         });
         Assert.Throws<ValidationException>(() =>
         {
-            new WarehouseEntry(productId, invalidQuantity);
+            new WarehouseEntry(entryId, invalidId, quantity);
+        });
+        Assert.Throws<ValidationException>(() =>
+        {
+            new WarehouseEntry(entryId, productId, invalidQuantity);
         });
     }
 
     [Fact]
     public void WarehouseEntrySetQuantityWorks()
     {
-        WarehouseEntry entry = new WarehouseEntry(productId, quantity);
+        WarehouseEntry entry = new WarehouseEntry(entryId, productId, quantity);
 
         int updatedQuantity = 123;
 
