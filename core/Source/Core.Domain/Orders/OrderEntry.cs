@@ -66,7 +66,7 @@ public class OrderEntry
             throw new ValidationException("Invalid order entry discount");
         if (decimal.IsNegative(discountedCost))
             throw new ValidationException("Invalid order entry discounted cost");
-        if (int.IsNegative(quantity))
+        if (quantity < 1)
             throw new ValidationException("Invalid order entry quantity");
     }
 }

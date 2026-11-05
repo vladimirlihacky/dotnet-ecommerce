@@ -34,7 +34,7 @@ public class ShoppingCartEntry
 
     public void SetQuantity(int quantity)
     {
-        if(int.IsNegative(quantity))
+        if(quantity < 1)
         {
             throw new ValidationException("Invalid shopping cart entry amount");
         }
@@ -55,7 +55,7 @@ public class ShoppingCartEntry
             throw new ValidationException("Invalid shopping cart id");
         if(productId == Guid.Empty)
             throw new ValidationException("Invalid shopping cart entry product id");
-        if(int.IsNegative(quantity))
+        if(quantity < 1)
             throw new ValidationException("Invalid shopping cart entry amount");
     }
 }

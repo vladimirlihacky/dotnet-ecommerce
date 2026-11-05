@@ -65,7 +65,7 @@ public class Product
             throw new ValidationException("Invalid product name");
         if(decimal.IsNegative(cost))
             throw new ValidationException("Invalid product cost");
-        if(decimal.IsNegative(discount) || discount > 1)
+        if(decimal.IsNegative(discount) || discount >= 1)
             throw new ValidationException("Invalid product discount");
         if(attributes.DistinctBy(a => a.Name).Count() != attributes.Count())
             throw new ValidationException("Duplicate product attributes");
