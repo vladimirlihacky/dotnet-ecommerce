@@ -1,5 +1,7 @@
 namespace Core.Presentation;
 
+using System.ComponentModel.DataAnnotations;
+using Core.Domain;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +23,9 @@ public class GlobalExceptionHandler : IExceptionHandler
 
         var (statusCode, title) = exception switch
         {
+            Domain.ValidationException => (StatusCodes.Status400BadRequest, "Invalid request body"),
+            Domain.InvalidStateTransitionException => (StatusCodes.Status400BadRequest, "Invalid operation"),
+            DomainException => (StatusCodes.Status400BadRequest, "Business rules violation"),
             _ => (StatusCodes.Status500InternalServerError, "An error occurred while processing your request.")
         };
 
