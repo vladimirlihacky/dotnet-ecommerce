@@ -2,8 +2,10 @@
 
 using Microsoft.EntityFrameworkCore;
 using Core.Infrastructure.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
 {
     public DbSet<Media> Media => Set<Media>();
     public DbSet<DeliveryInfo> DeliveryInfo => Set<DeliveryInfo>();
@@ -21,7 +23,6 @@ public class AppDbContext : DbContext
     public DbSet<Product> Products => Set<Product>();
     public DbSet<ShoppingCart> ShoppingCarts => Set<ShoppingCart>();
     public DbSet<ShoppingCartEntry> ShoppingCartEntries => Set<ShoppingCartEntry>();
-    public DbSet<User> Users => Set<User>();
     public DbSet<UserAuth> UserAuthentications => Set<UserAuth>();
     public DbSet<WarehouseEntry> WarehouseEntries => Set<WarehouseEntry>();
 

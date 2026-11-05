@@ -10,15 +10,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     {
         builder.ToTable("Users");
 
-        builder.HasKey(u => u.Id);
-
-        builder.Property(u => u.Name)
+        builder.Property(u => u.UserName)
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.HasIndex(u => u.Name)
+        builder.HasIndex(u => u.UserName)
             .IsUnique()
-            .HasDatabaseName("IX_Users_Name_Unique");
+            .HasDatabaseName("IX_Users_UserName_Unique");
 
         builder.HasOne(u => u.Account)
             .WithOne(a => a.User)

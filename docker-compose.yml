@@ -8,5 +8,3 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=${MSSQL_PASSWORD}
-    volumes:
-      - ./data/db/mssq:/var/opt/mssq
